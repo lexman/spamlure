@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All my accounts</title>
+    <meta name="description" content="All my accounts">
+    <link id="favicon" rel="icon" href="https://hyperdev.com/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <script type="text/javascript">
+      function previewScreenshot(file){
+         if (file) {
+           var reader  = new FileReader();
+           reader.onloadend = function (e) {
+             $('#screenshot_preview').attr('src', e.target.result);
+           }
+           console.log(file);
+           reader.readAsDataURL(file);
+         } else {
+             $('#screenshot_preview').attr('src', '');
+         }
+      }
+      
+      function extract_titre(site) {
+        var reg_url = /https?:\/\/(www\.)?([-a-zA-Z0-9@:%_\+~#=]{2,256}\.)+[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i;
+        captured = reg_url.exec(site);
+        if (!captured) {
+          return '';
+        }
+        return captured[2].substr(0, captured[2].length -1);
+      }
+      
+      function test_extract() {
+        tests = [ 
+          ['http://www.tf1.fr', 'tf1'],
+          ['http://www.toto.tf1.fr', 'tf1'],
+          ['http://www.toto.tata.tf1.fr', 'tf1'],
+          ['https://fr.mappy.com/#/0/M2/THome/N151.12061,6.11309,2.3822,48.88169/Z11/', 'mappy']
+        ];
+        for (i in tests) {
+          url = tests[i][0];
+          expected = tests[i][1];
+          if (extract_titre(url) != expected) {
+            console.log("Expected " + expected + " for " + url);
+          }
+        }
+      }
+
+      function update_fields_with_site() {
+        site = $('#site').val();
+        titre = extract_titre(site);
+        if (titre == '') {
+          return;
+        }
+        if ($('#titre').val() == '') {
+          $('#titre').val(titre);
+        }
+        if ($('#mail').val() == '') {
+          mail = titre + '@lexman.org';
+          $('#mail').val(mail);
+        }
+      }
+
+  </script>
+  <div class="container">
+    <h1 class="page-header">
+      All my accounts
+    </h1>
+    <form enctype="multipart/form-data" method="post" action="/accounts" class="form">
+      <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="mail">Site</label>
+        <div class="col-xs-10">
+          <input class="form-control" name="site" id="site" type="text" maxlength="100" placeholder="http://www.tf1.fr/new_user" onchange="update_fields_with_site()"/> 
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="titre">Titre</label>
+        <div class="col-xs-10">
+          <input class="form-control" name="titre" id="titre" type="text" value="" maxlength="100" placeholder="tf1" onchange="update_mail_with_site()">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="mail">Mail surveillé</label>
+        <div class="col-xs-10">
+          <input class="form-control" name="mail" id="mail" type="text" maxlength="100" placeholder="tf1@spam-honeypot.com">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="contact">Contact du site</label>
+        <div class="col-xs-10">
+          <input class="form-control" name="contact" id="contact" type="text" value="" maxlength="100" placeholder="contact@tf1.fr">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="screenshot">Capture d'écran</label>
+        <div class="col-xs-10">
+          <div class="filestyle">
+            <img id="screenshot_preview" class="col-xs-6" src="" alt="Screenshot preview">
+            <input id="screenshot" class="col-xs-4" type="file" name="screenshot" onchange="previewScreenshot(this.files[0])"/>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-xs-2 col-xs-10">
+          <button type="submit" class="btn btn-primary">Nouveau compte</button>
+        </div>
+      </div>
+    </form>
+    <hr/>
+    <table id="tabaccounts" class="table">
+      <tr>
+        <th>Titre</th>
+        <th>Site</th>
+        <th>Mail surveillé</th>
+        <th>Contact du site</th>
+        <th>Screenshot</th>
+      </tr>
+    </table>
+    <div id='test'></div>
+  </div>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+            crossorigin="anonymous"></script>
+    <script src="/accounts.js"></script>
+    <script type="text/javascript">
+      test_extract();
+    </script>
+  </body>
+</html>
