@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link id="bsdp-css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css" rel="stylesheet">
   </head>
   <body>
     <script type="text/javascript">
@@ -94,6 +95,12 @@
         </div>
       </div>
       <div class="form-group row">
+        <label class="col-xs-2 col-form-label" for="register_date">Date d'inscription</label>
+        <div class="col-xs-10">
+          <input class="form-control" data-date-today-highlight="true" name="register_date" id="register_date" data-provide="datepicker">
+        </div>
+      </div>
+      <div class="form-group row">
         <label class="col-xs-2 col-form-label" for="screenshot">Capture d'écran</label>
         <div class="col-xs-10">
           <div class="filestyle">
@@ -108,6 +115,7 @@
         </div>
       </div>
     </form>
+    <a href="https://webmailcluster.1and1.fr/">Boite mail</a>
     <hr/>
     <table id="tabaccounts" class="table">
       <tr>
@@ -118,7 +126,6 @@
         <th>Screenshot</th>
       </tr>
     </table>
-    <div id='test'></div>
   </div>
 
     <!-- Your web-app is https, so your scripts need to be too -->
@@ -126,6 +133,7 @@
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
             crossorigin="anonymous"></script>
     <script src="/accounts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript">
       test_extract();
     </script>
