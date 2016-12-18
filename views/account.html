@@ -22,7 +22,9 @@
       </h1>
 
       Mail surveillé : {{mail}} <br/>
+      {% if screenshot %}
       <img src="../screenshots/{{screenshot}}" class="col-xs-12"/>
+      {% endif %}
       <hr/>
       <form class="form" action="/send_mail" method="post">
         Envoyer un mail :
@@ -36,7 +38,7 @@
         <div class="form-group row">
           <label class="col-xs-2 col-form-label" for="subject">Object</label>
           <div class="col-xs-10">
-            <input class="form-control" name="subject" id="subject" type="text" value="Mise en demeure" maxlength="100">
+            <input class="form-control" name="subject" id="subject" type="text" value="Utilisation illégale de mon adresse email" maxlength="100">
           </div>
         </div>
         <div class="form-group row">
